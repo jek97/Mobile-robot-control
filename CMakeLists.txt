@@ -18,6 +18,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   std_srvs
   tf
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -54,18 +55,16 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+ add_message_files(
+   FILES
+   Conf.msg
+ )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+ add_service_files(
+   FILES
+   Ngoal.srv
+ )
 
 ## Generate actions in the 'action' folder
  add_action_files(
@@ -78,6 +77,7 @@ find_package(catkin REQUIRED COMPONENTS
    DEPENDENCIES
    actionlib_msgs
    geometry_msgs
+   std_msgs
  )
 
 ################################################
@@ -111,8 +111,8 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES assignment_2_2022
-#  CATKIN_DEPENDS actionlib actionlib_msgs geometry_msgs nav_msgs roscpp rospy sensor_msgs std_msgs std_srvs tf
+  LIBRARIES assignment_2_2022
+  CATKIN_DEPENDS actionlib actionlib_msgs geometry_msgs nav_msgs roscpp rospy sensor_msgs std_msgs std_srvs tf
 #  DEPENDS system_lib
 )
 
@@ -140,7 +140,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/assignment_2_2022_node.cpp)
+## add_executable(${PROJECT_NAME}_node scripts/assignment_2_2022_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -150,10 +150,10 @@ include_directories(
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_dependencies(user_interface ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(${PROJECT_NAME}_node
+# target_link_libraries(user_interface
 #   ${catkin_LIBRARIES}
 # )
 
