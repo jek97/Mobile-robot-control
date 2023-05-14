@@ -1,4 +1,3 @@
-ls
 # ROS bug0 controll of a robot #
 ===================================
 this repository contain the implementation of an autonomous mobile robot able to move following the bug0 algorithm to the given target.
