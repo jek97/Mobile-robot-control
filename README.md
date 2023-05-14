@@ -1,3 +1,4 @@
+ls
 # ROS bug0 controll of a robot #
 ===================================
 this repository contain the implementation of an autonomous mobile robot able to move following the bug0 algorithm to the given target.
@@ -6,7 +7,7 @@ The starting code can be downloaded at the link: [GitHub repository](https://git
 
 ## How to run the project ##
 Note that to run the project it's necessary to have both ROS (Noetic) and Python3 installed on your machine.
-1. Download the package from github: [GitHub repository](https://github.com/jek97/RT1.git)
+1. Download the package from github in your local workspace: [GitHub repository](https://github.com/jek97/RT1.git)
 2. instal xterm, by the command:
 ```
 sudo apt-get install xterm
