@@ -1,5 +1,5 @@
 # ROS bug0 controll of a robot #
-===============================================
+
 this repository contain the implementation of an autonomous mobile robot able to move following the bug0 algorithm to the given target.
 The implementation use the Gazebo simulator together with the Rviz visualizer to give a direct rappresentation of what's going on, in detail the differential robot is provided by a lidar, to perform an external measure of the environment, and encoders, to perform an internal measure and so the odometry, all these component are then all combined in a ROS architecture.
 The starting code can be downloaded at the link: [GitHub repository](https://github.com/CarmineD8/assignment_2_2022)
