@@ -4,6 +4,24 @@ import rospy
 from nav_msgs.msg import Odometry
 import assignment_2_2022.msg
 
+"""
+..module:: node_a
+  :platform: Unix
+  :synopsis: Python module for the translation and publication of the robot position and velocity
+  :version: 0.1
+
+..moduleauthor:: Giacomo Lugano jek.lugano@yahoo.com
+
+This node works as an adapter converting the odometry information received in the custom message Conf.msg type.
+
+Subscriber:
+   /odom
+
+Publisher:
+   /configuration
+
+"""
+
 confy = assignment_2_2022.msg.Conf()
 pub_conf = rospy.Publisher('/configuration', assignment_2_2022.msg.Conf, queue_size=1) # publish to configuration to pass the actual one
 

@@ -4,10 +4,28 @@ import rospy
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
-from tf import transformations
 from std_srvs.srv import *
 
-import math
+"""
+..module:: wall_follower_service
+  :platform: Unix
+  :synopsis: Python module for the robot bug0 control, wall following part
+  :version: 0.1
+
+..moduleauthor:: Giacomo Lugano jek.lugano@yahoo.com
+
+This node implement the behavior of, one an obstacle is encountered along the path, following the wall perimeter, maintaining the wall on the robot right side at a given distance.
+
+Subscriber:
+   /scan
+
+Publisher:
+   /cmd_vel
+
+Service:
+   /wall_follower_switch (server)
+
+"""
 
 active_ = False
 

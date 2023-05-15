@@ -10,6 +10,28 @@ import sys
 import select
 import os   
 
+"""
+..module:: user_interface
+  :platform: Unix
+  :synopsis: Python module for the robot user interface
+  :version: 0.1
+
+..moduleauthor:: Giacomo Lugano jek.lugano@yahoo.com
+
+this node menage the interaction with the simulation, through it it's possible to set a new goal, delete the current one, call the service provided by info_server to see how many goal have been reached and how many have been deleted
+
+Parameters:
+   n_goal (input/output)
+   n_deleted (input/output)
+
+Service:
+   /info (client)
+
+Action:
+   /reaching_goal (client)
+
+"""
+
 def main():
     gf = 0 # goal flag to increase the number of goal only the first time the state pass to succeeded
     rospy.init_node('user_interface', anonymous=True) # init the node

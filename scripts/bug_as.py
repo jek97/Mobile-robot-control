@@ -12,6 +12,36 @@ from tf import transformations
 from std_srvs.srv import *
 import time
 
+"""
+..module:: bug_as
+  :platform: Unix
+  :synopsis: Python module for the robot bug0 control
+  :version: 0.1
+
+..moduleauthor:: Giacomo Lugano jek.lugano@yahoo.com
+
+this node , based on a state machine architecture, together with the two node go_to_point and wall_follower will menage the implementation of the bug0 algorithm, indeed based on the lidar information will decide when to switch between the go_to_point behavior and the wall_follower one.
+
+Parameters:
+   des_pos_x (output)
+   des_pos_y (output)
+
+Subscriber:
+   /scan
+   /odom 
+
+Publisher:
+   /cmd_vel
+
+Service:
+   /go_to_point_switch (client)
+   /wall_follower_switch (client)
+
+Action:
+   /reaching_goal (Server)
+
+"""
+
 srv_client_go_to_point_ = None
 srv_client_wall_follower_ = None
 yaw_ = 0

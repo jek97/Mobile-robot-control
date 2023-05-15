@@ -7,9 +7,32 @@ from geometry_msgs.msg import Twist, Point
 from nav_msgs.msg import Odometry
 from tf import transformations
 from std_srvs.srv import *
-import time
-
 import math
+
+"""
+..module:: go_to_point_service
+  :platform: Unix
+  :synopsis: Python module for the robot bug0 control, straight motion part
+  :version: 0.1
+
+..moduleauthor:: Giacomo Lugano jek.lugano@yahoo.com
+
+This node implement the simple behavior of the robot of, given a goal position, reach it moving in straight line, it will be integrated with the other nodes to perform the bug0 algorithm.
+
+Parameters:
+   des_pos_x (input)
+   des_pos_y (input)
+
+Subscriber:
+   /odom 
+
+Publisher:
+   /cmd_vel
+
+Service:
+   /go_to_point_switch (server)
+
+"""
 
 active_ = False
 
@@ -41,6 +64,13 @@ pub = None
 
 
 def go_to_point_switch(req):
+    """
+    Args: SetBool req: service request message 
+
+    This method will return the succes responce to the service client.
+
+    Return: SetBoolResponse res: service responce message
+    """
     global active_
     active_ = req.data
     res = SetBoolResponse()
@@ -52,6 +82,11 @@ def go_to_point_switch(req):
 
 
 def clbk_odom(msg):
+    """
+    Args: Odometry msg: odometry message
+
+    This method will fulfill the variables 'position_', 'yaw_' with the received message informations
+    """
     global position_
     global yaw_
 
@@ -69,18 +104,27 @@ def clbk_odom(msg):
 
 
 def change_state(state):
+    """
+    This method will notify the change of state
+    """
     global state_
     state_ = state
     print ('State changed to [%s]' % state_)
 
 
 def normalize_angle(angle):
+    """
+    This method will normalize the angle argument obtaining an angle always between -180° and +180°
+    """
     if(math.fabs(angle) > math.pi):
         angle = angle - (2 * math.pi * angle) / (math.fabs(angle))
     return angle
 
 
 def fix_yaw(des_pos):
+    """ 
+    This method will evaluate the heading error between the robot and the goal and if over a threshold will pulish a rotational speed to allign with it; otherwise it will change the current state of the node by the function 'change_state' that will notify the changes.
+    """
     global yaw_, pub, yaw_precision_2_, state_
     desired_yaw = math.atan2(des_pos.y - position_.y, des_pos.x - position_.x)
     err_yaw = normalize_angle(desired_yaw - yaw_)
@@ -104,6 +148,9 @@ def fix_yaw(des_pos):
 
 
 def go_straight_ahead(des_pos):
+    """
+    This method will use a PID controller to move the robot in a straight line to the goal, passed as argument, then if this motion increase the misalignment of the robot over a threshold the state will be changed back to 0 to correct this fact; otherwise if the distance between the robot and the goal fall under a certain threshold the node will switch to the new state 2.
+    """
     global yaw_, pub, yaw_precision_, state_
     desired_yaw = math.atan2(des_pos.y - position_.y, des_pos.x - position_.x)
     err_yaw = desired_yaw - yaw_
@@ -129,6 +176,9 @@ def go_straight_ahead(des_pos):
 
 
 def done():
+    """
+    This method that will simply set the velocity to zero and publish it.
+    """
     twist_msg = Twist()
     twist_msg.linear.x = 0
     twist_msg.angular.z = 0
@@ -136,6 +186,12 @@ def done():
                 
 
 def main():
+    """
+    the node will, after initialization, create a publisher to the topic '/cmd_vel' of type Twist, it's the topic used to communicate with the robot giving it the velocity, both linear and angular at each step; after that the node will subscribe to the topic '/odom' of type Odomentry, that will give a feedback to the algorithm giving the actual position and velocity of the robot;
+    moreover the node will check the service *go_to_point* switch that will be used by the 'bug_action_server' node to switch between the behavior of this node and the one of 'wall_follower'.
+    Thanks to the above mentioned subscription to the topic '/odom' all the times the robot receive a new message it will update its position and orientation by the callback 'clbk_odom()'.
+    finished this initial phase the node will check the actual goal position in the ros parameter server under the names 'des_pos_x' and 'des_pos_y'.
+    """
     global pub, active_
 
     rospy.init_node('go_to_point')
