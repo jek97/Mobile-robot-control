@@ -35,7 +35,7 @@ the package is organized in the following directories:
 * world: in it a description of the world is given for the simulation, rapresenting the dimensions and displacement of the environment.
 
 the project is divided in eleven nodes as described in the figure:
-![Flowchart](./rograph.png)
+![Flowchart](./rosgraph.png)
 in detail:
 * the joint_state_publisher and the robot_state publisher: are provided by gazebo for the control of any possible arm mounted on the robot, in our case the robot has no need for them and they will not be used.
 * gazebo_gui: this node will show the simulation allowing us to interact if needed, for what regards the settings.
