@@ -1,25 +1,15 @@
 #! /usr/bin/env python3
 
-# import ros stuff
-import rospy
-from sensor_msgs.msg import LaserScan
-from geometry_msgs.msg import Twist, Point
-from nav_msgs.msg import Odometry
-from tf import transformations
-from std_srvs.srv import *
-import math
-
 """
-..module:: go_to_point_service
-  :platform: Unix
-  :synopsis: Python module for the robot bug0 control, straight motion part
-  :version: 0.1
+.. module:: go_to_point_service
+   :platform: Unix
+   :synopsis: Python module for the robot bug0 control, straight motion part
 
-..moduleauthor:: Giacomo Lugano jek.lugano@yahoo.com
+.. moduleauthor:: Giacomo Lugano jek.lugano@yahoo.com
 
 This node implement the simple behavior of the robot of, given a goal position, reach it moving in straight line, it will be integrated with the other nodes to perform the bug0 algorithm.
 
-Parameters:
+Parameter:
    des_pos_x (input)
    des_pos_y (input)
 
@@ -33,6 +23,14 @@ Service:
    /go_to_point_switch (server)
 
 """
+
+import rospy
+from sensor_msgs.msg import LaserScan
+from geometry_msgs.msg import Twist, Point
+from nav_msgs.msg import Odometry
+from tf import transformations
+from std_srvs.srv import *
+import math
 
 active_ = False
 

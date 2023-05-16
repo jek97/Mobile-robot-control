@@ -1,26 +1,15 @@
 #! /usr/bin/env python3
 
-import rospy
-import actionlib
-import actionlib.msg
-from assignment_2_2022.srv import Ngoal
-import assignment_2_2022.msg
-import time
-import sys
-import select
-import os   
-
 """
-..module:: user_interface
-  :platform: Unix
-  :synopsis: Python module for the robot user interface
-  :version: 0.1
+.. module:: user_interface
+   :platform: Unix
+   :synopsis: Python module for the robot user interface
 
-..moduleauthor:: Giacomo Lugano jek.lugano@yahoo.com
+.. moduleauthor:: Giacomo Lugano jek.lugano@yahoo.com
 
 this node menage the interaction with the simulation, through it it's possible to set a new goal, delete the current one, call the service provided by info_server to see how many goal have been reached and how many have been deleted
 
-Parameters:
+Parameter:
    n_goal (input/output)
    n_deleted (input/output)
 
@@ -31,6 +20,16 @@ Action:
    /reaching_goal (client)
 
 """
+
+import rospy
+import actionlib
+import actionlib.msg
+from assignment_2_2022.srv import Ngoal
+import assignment_2_2022.msg
+import time
+import sys
+import select
+import os   
 
 def main():
     """

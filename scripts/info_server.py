@@ -1,15 +1,11 @@
 #! /usr/bin/env python3
 
-import rospy
-from assignment_2_2022.srv import Ngoal
-
 """
-..module:: info_server
-  :platform: Unix
-  :synopsis: Python module for return upon request the number of goal achieìved and deleted
-  :version: 0.1
+.. module:: info_server
+   :platform: Unix
+   :synopsis: Python module for return upon request the number of goal achieìved and deleted
 
-..moduleauthor:: Giacomo Lugano jek.lugano@yahoo.com
+.. moduleauthor:: Giacomo Lugano jek.lugano@yahoo.com
 
 This node will provide the system with a service, used by the user_interface for counting the number of goal reached and the number of goal deleted upon request.
 
@@ -22,11 +18,14 @@ Service:
 
 """
 
+import rospy
+from assignment_2_2022.srv import Ngoal
+
 info = Ngoal()
 
-def ret_info():
+def ret_info(req):
     """
-    Args: None
+    Args: Ngoal(req): None
 
     In this method the message is fulfilled with the number of goal achived and deleted, obtained from the ros parameter server, and sent back to the client.
 

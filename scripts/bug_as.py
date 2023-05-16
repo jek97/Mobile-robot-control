@@ -1,28 +1,15 @@
 #! /usr/bin/env python3
 
-import rospy
-from geometry_msgs.msg import Point, Pose, Twist
-from sensor_msgs.msg import LaserScan
-from nav_msgs.msg import Odometry
-import math
-import actionlib
-import actionlib.msg
-import assignment_2_2022.msg
-from tf import transformations
-from std_srvs.srv import *
-import time
-
 """
-..module:: bug_as
-  :platform: Unix
-  :synopsis: Python module for the robot bug0 control
-  :version: 0.1
+.. module:: bug_as
+   :platform: Unix
+   :synopsis: Python module for the robot bug0 control
 
-..moduleauthor:: Giacomo Lugano jek.lugano@yahoo.com
+.. moduleauthor:: Giacomo Lugano jek.lugano@yahoo.com
 
 this node , based on a state machine architecture, together with the two node go_to_point and wall_follower will menage the implementation of the bug0 algorithm, indeed based on the lidar information will decide when to switch between the go_to_point behavior and the wall_follower one.
 
-Parameters:
+Parameter:
    des_pos_x (output)
    des_pos_y (output)
 
@@ -41,6 +28,19 @@ Action:
    /reaching_goal (Server)
 
 """
+
+import rospy
+from geometry_msgs.msg import Point, Pose, Twist
+from sensor_msgs.msg import LaserScan
+from nav_msgs.msg import Odometry
+import math
+import actionlib
+import actionlib.msg
+import assignment_2_2022.msg
+from tf import transformations
+from std_srvs.srv import *
+import time
+
 
 srv_client_go_to_point_ = None
 srv_client_wall_follower_ = None

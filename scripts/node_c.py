@@ -1,17 +1,11 @@
 #! /usr/bin/env python3
 
-import rospy
-from geometry_msgs.msg import Point
-import assignment_2_2022.msg
-import math
-
 """
-..module:: node_c
-  :platform: Unix
-  :synopsis: Python module for printing on the terminal the robot informations
-  :version: 0.1
+.. module:: node_c
+   :platform: Unix
+   :synopsis: Python module for printing on the terminal the robot informations
 
-..moduleauthor:: Giacomo Lugano jek.lugano@yahoo.com
+.. moduleauthor:: Giacomo Lugano jek.lugano@yahoo.com
 
 This node will use the information received to print on the terminal the actual distance to the goal and the average speed of tyhe robot.
 
@@ -23,6 +17,12 @@ Subscriber:
    /configuration
 
 """
+
+import rospy
+from geometry_msgs.msg import Point
+import assignment_2_2022.msg
+import math
+
 goal = Point()
 d = 0 # init the distance
 v = 0 # init the actual velocity
