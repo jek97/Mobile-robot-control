@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>scripts.user_interface &mdash; Mobile robot control 0.1 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Mobile robot control
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Mobile robot control</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">scripts.user_interface</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for scripts.user_interface</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /usr/bin/env python3</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. module:: user_interface</span>
+<span class="sd">   :platform: Unix</span>
+<span class="sd">   :synopsis: Python module for the robot user interface</span>
+
+<span class="sd">.. moduleauthor:: Giacomo Lugano jek.lugano@yahoo.com</span>
+
+<span class="sd">this node menage the interaction with the simulation, through it it&#39;s possible to set a new goal, delete the current one, call the service provided by info_server to see how many goal have been reached and how many have been deleted</span>
+
+<span class="sd">Parameter:</span>
+<span class="sd">   n_goal (input/output)</span>
+<span class="sd">   n_deleted (input/output)</span>
+
+<span class="sd">Service:</span>
+<span class="sd">   /info (client)</span>
+
+<span class="sd">Action:</span>
+<span class="sd">   /reaching_goal (client)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">import</span> <span class="nn">actionlib</span>
+<span class="kn">import</span> <span class="nn">actionlib.msg</span>
+<span class="kn">from</span> <span class="nn">assignment_2_2022.srv</span> <span class="kn">import</span> <span class="n">Ngoal</span>
+<span class="kn">import</span> <span class="nn">assignment_2_2022.msg</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">select</span>
+<span class="kn">import</span> <span class="nn">os</span>   
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../index.html#scripts.user_interface.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args: None</span>
+
+<span class="sd">    This method first initialize the node, then create the action client for teh action */reaching_goal*, needed to set a new goal or delete it, and wait for the action server launch;</span>
+<span class="sd">    after that it connect as a client to the service */info* provided by the *info_server* node to aquire the number of goal reached and deleted upon request, and wait for its launch.</span>
+<span class="sd">    then some variable are initialized and the number of goal reached and deleted is initialized in the ros parameters server.</span>
+<span class="sd">    getting inside the while loop the node check if the goal has been reached, by checking the state of the action server and that it&#39;s the first time it has been checked since the goal was achived, if this is the case the number of goal is retrieved from the ros parameters server, increased and set back in the ros parameters server.</span>
+<span class="sd">    otherwise the goal flag *gf* is set to 0 again, to avoid to increase the number of goal in the time periods in which the goal has been reached and we&#39;re waiting for a new one.</span>
+<span class="sd">    after that the counter *count* is decreased, if it&#39;s bigger then 0, this counter will be used to clear the terminal only when needed.</span>
+<span class="sd">    done that if the counter reach zero the terminal is cleared, the menu message is displayed and the node wait for a user input in non blocking mode, based on it:</span>
+<span class="sd">    - if the user type *n* the node ask to set the new goal position in it&#39;s x and y coordinates, the new goal is sended to the action server and the counter is set to zero.</span>
+<span class="sd">    - if the user type *d* and the robot is actually tring to reach a goal, checked by the action server state, the node will delete the goal and increase the number of goal deleted in te ros parameters server.</span>
+<span class="sd">    - if the user type *i* the node will use the */info* service to aquire the number of goal achieved and deleted and will display it on the terminal, the counter will be then set to 10 to maintain the message on the terminal for almost 5 seconds.</span>
+<span class="sd">    </span>
+<span class="sd">    Return: None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">gf</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># goal flag to increase the number of goal only the first time the state pass to succeeded</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;user_interface&#39;</span><span class="p">,</span> <span class="n">anonymous</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># init the node</span>
+    <span class="n">act_clnt</span> <span class="o">=</span> <span class="n">actionlib</span><span class="o">.</span><span class="n">SimpleActionClient</span><span class="p">(</span><span class="s1">&#39;/reaching_goal&#39;</span><span class="p">,</span> <span class="n">assignment_2_2022</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">PlanningAction</span><span class="p">)</span>
+    <span class="n">act_clnt</span><span class="o">.</span><span class="n">wait_for_server</span><span class="p">()</span>
+    <span class="n">srv_info</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s2">&quot;/info&quot;</span><span class="p">,</span> <span class="n">Ngoal</span><span class="p">)</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s2">&quot;/info&quot;</span><span class="p">)</span>
+
+    <span class="n">goal</span> <span class="o">=</span> <span class="n">assignment_2_2022</span><span class="o">.</span><span class="n">msg</span><span class="o">.</span><span class="n">PlanningGoal</span><span class="p">()</span> 
+    <span class="n">goal</span><span class="o">.</span><span class="n">target_pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">Ngoal</span><span class="p">()</span>
+    <span class="n">n_goal</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># number of goal reached</span>
+    <span class="n">n_deleted</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># number of goal deleted</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="s1">&#39;n_goal&#39;</span><span class="p">,</span> <span class="n">n_goal</span><span class="p">)</span> <span class="c1"># setting the parameters in the paramserver</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="s1">&#39;n_deleted&#39;</span><span class="p">,</span> <span class="n">n_deleted</span><span class="p">)</span> <span class="c1"># setting the parameters in the paramserver</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">act_clnt</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">gf</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span> <span class="c1"># if i&#39;ve reached the goal</span>
+            <span class="n">n_goal</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s1">&#39;n_goal&#39;</span><span class="p">)</span> <span class="c1"># get the actual number of goal</span>
+            <span class="n">n_goal</span> <span class="o">=</span> <span class="n">n_goal</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1"># increase it</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="s1">&#39;n_goal&#39;</span><span class="p">,</span> <span class="n">n_goal</span><span class="p">)</span> <span class="c1"># load it in the paramserver</span>
+            <span class="n">gf</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">act_clnt</span><span class="o">.</span><span class="n">get_state</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="n">gf</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">):</span> <span class="c1"># to display the information if the counter is bigger then 0 decrease it</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="n">count</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="k">elif</span> <span class="p">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span> <span class="c1"># if it&#39;s 0 then clear the screan and write the menu</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;cls&#39;</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;nt&#39;</span> <span class="k">else</span> <span class="s1">&#39;clear&#39;</span><span class="p">)</span>
+            <span class="n">log</span> <span class="o">=</span> <span class="s2">&quot;press N for setting a new goal, D to delete the previous one, I for getting information about the number of goal reached and deleted:&quot;</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">log</span><span class="p">)</span>
+
+        <span class="n">v</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="p">],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="mf">0.5</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># get the user input           </span>
+        <span class="k">if</span> <span class="n">v</span><span class="p">:</span>                                                    
+            <span class="n">f</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">continue</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">f</span> <span class="o">==</span> <span class="s2">&quot;n&quot;</span><span class="p">):</span> <span class="c1"># then set the new goal</span>
+            <span class="n">log</span> <span class="o">=</span> <span class="s2">&quot;plese enter the x coordinate of the goal:&quot;</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">log</span><span class="p">)</span>
+            <span class="n">goal</span><span class="o">.</span><span class="n">target_pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span> <span class="c1"># setting the x component of the goal</span>
+            <span class="n">log</span> <span class="o">=</span> <span class="s2">&quot;plese enter the y coordinate of the goal&quot;</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">log</span><span class="p">)</span>
+            <span class="n">goal</span><span class="o">.</span><span class="n">target_pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span> <span class="c1"># setting the y component of the goal</span>
+            <span class="n">act_clnt</span><span class="o">.</span><span class="n">send_goal</span><span class="p">(</span><span class="n">goal</span><span class="p">)</span> <span class="c1"># sending the goal to the action server</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># you can clear and display again the menu</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">f</span> <span class="o">==</span> <span class="s2">&quot;d&quot;</span> <span class="ow">and</span> <span class="p">(</span><span class="n">act_clnt</span><span class="o">.</span><span class="n">get_state</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span> <span class="c1"># in this way you&#39;re deleting the goal while there is one active</span>
+            <span class="n">act_clnt</span><span class="o">.</span><span class="n">cancel_goal</span><span class="p">()</span> <span class="c1"># delete the goal</span>
+            <span class="n">n_deleted</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s1">&#39;n_deleted&#39;</span><span class="p">)</span> <span class="c1"># get the actual number of goal deleted</span>
+            <span class="n">n_deleted</span> <span class="o">=</span> <span class="n">n_deleted</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1"># increase it</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="s1">&#39;n_deleted&#39;</span><span class="p">,</span> <span class="n">n_deleted</span><span class="p">)</span> <span class="c1"># load it in the paramserver</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># you can clear and display again the menu</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">f</span> <span class="o">==</span> <span class="s2">&quot;i&quot;</span><span class="p">):</span> <span class="c1"># get information about the goal</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="n">srv_info</span><span class="p">()</span>
+            <span class="n">log</span> <span class="o">=</span> <span class="s2">&quot;number of Goal reached: </span><span class="si">%f</span><span class="s2">; number of Goal deleted: </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">n_goal</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">n_deleted</span><span class="p">)</span>
+            <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="n">log</span><span class="p">)</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="mi">10</span> <span class="c1"># leave the infromation on screen for 5 seconds</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lugano Giacomo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

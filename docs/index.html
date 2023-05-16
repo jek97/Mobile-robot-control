@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to Mobile robot control’s documentation! &mdash; Mobile robot control 0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Mobile robot control
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Welcome to Mobile robot control’s documentation!</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a><ul>
+<li><a class="reference internal" href="#mobile-robot-controll-documentation">Mobile robot controll documentation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-scripts.go_to_point_service">Go to point Module:</a><ul>
+<li><a class="reference internal" href="#scripts.go_to_point_service.change_state"><code class="docutils literal notranslate"><span class="pre">change_state()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.go_to_point_service.clbk_odom"><code class="docutils literal notranslate"><span class="pre">clbk_odom()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.go_to_point_service.done"><code class="docutils literal notranslate"><span class="pre">done()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.go_to_point_service.fix_yaw"><code class="docutils literal notranslate"><span class="pre">fix_yaw()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.go_to_point_service.go_straight_ahead"><code class="docutils literal notranslate"><span class="pre">go_straight_ahead()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.go_to_point_service.go_to_point_switch"><code class="docutils literal notranslate"><span class="pre">go_to_point_switch()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.go_to_point_service.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.go_to_point_service.normalize_angle"><code class="docutils literal notranslate"><span class="pre">normalize_angle()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-scripts.wall_follow_service">Wall follower Module:</a><ul>
+<li><a class="reference internal" href="#scripts.wall_follow_service.change_state"><code class="docutils literal notranslate"><span class="pre">change_state()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.wall_follow_service.clbk_laser"><code class="docutils literal notranslate"><span class="pre">clbk_laser()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.wall_follow_service.find_wall"><code class="docutils literal notranslate"><span class="pre">find_wall()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.wall_follow_service.follow_the_wall"><code class="docutils literal notranslate"><span class="pre">follow_the_wall()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.wall_follow_service.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.wall_follow_service.take_action"><code class="docutils literal notranslate"><span class="pre">take_action()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.wall_follow_service.turn_left"><code class="docutils literal notranslate"><span class="pre">turn_left()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.wall_follow_service.wall_follower_switch"><code class="docutils literal notranslate"><span class="pre">wall_follower_switch()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-scripts.bug_as">Bug0 Module:</a><ul>
+<li><a class="reference internal" href="#scripts.bug_as.change_state"><code class="docutils literal notranslate"><span class="pre">change_state()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.bug_as.clbk_laser"><code class="docutils literal notranslate"><span class="pre">clbk_laser()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.bug_as.clbk_odom"><code class="docutils literal notranslate"><span class="pre">clbk_odom()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.bug_as.done"><code class="docutils literal notranslate"><span class="pre">done()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.bug_as.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.bug_as.normalize_angle"><code class="docutils literal notranslate"><span class="pre">normalize_angle()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.bug_as.planning"><code class="docutils literal notranslate"><span class="pre">planning()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-scripts.node_a">Node A Module:</a><ul>
+<li><a class="reference internal" href="#scripts.node_a.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.node_a.odom_cb"><code class="docutils literal notranslate"><span class="pre">odom_cb()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-scripts.node_c">Node C Module:</a><ul>
+<li><a class="reference internal" href="#scripts.node_c.confy_cb"><code class="docutils literal notranslate"><span class="pre">confy_cb()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.node_c.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-scripts.info_server">Info server Module:</a><ul>
+<li><a class="reference internal" href="#scripts.info_server.info_server"><code class="docutils literal notranslate"><span class="pre">info_server()</span></code></a></li>
+<li><a class="reference internal" href="#scripts.info_server.ret_info"><code class="docutils literal notranslate"><span class="pre">ret_info()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-scripts.user_interface">User interface Module:</a><ul>
+<li><a class="reference internal" href="#scripts.user_interface.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Mobile robot control</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Welcome to Mobile robot control’s documentation!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="welcome-to-mobile-robot-control-s-documentation">
+<h1>Welcome to Mobile robot control’s documentation!<a class="headerlink" href="#welcome-to-mobile-robot-control-s-documentation" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+<section id="mobile-robot-controll-documentation">
+<h2>Mobile robot controll documentation<a class="headerlink" href="#mobile-robot-controll-documentation" title="Permalink to this heading"></a></h2>
+<p>This is the documentation of the Mobile robot control package in which a simulation of a differential drive robot, equipped with encoders and lidar is provided, the robot moves inside a closed environment following the bug0 algorithm to reach the desired goal specified by the user by the user interface.
+the whole simulation rely on Gazebo and Rviz and it’s encoded by a ROS architecture showing the use of publish/subscribe, services and action communication, both with standard formats and custom ones.
+moreover the package is provided with a launch file used to launch all the simulation at once.</p>
+</section>
+</section>
+<section id="module-scripts.go_to_point_service">
+<span id="go-to-point-module"></span><h1>Go to point Module:<a class="headerlink" href="#module-scripts.go_to_point_service" title="Permalink to this heading"></a></h1>
+<span class="target" id="module-go_to_point_service"></span><p>This node implement the simple behavior of the robot of, given a goal position, reach it moving in straight line, it will be integrated with the other nodes to perform the bug0 algorithm.</p>
+<dl class="simple">
+<dt>Parameter:</dt><dd><p>des_pos_x (input)
+des_pos_y (input)</p>
+</dd>
+<dt>Subscriber:</dt><dd><p>/odom</p>
+</dd>
+<dt>Publisher:</dt><dd><p>/cmd_vel</p>
+</dd>
+<dt>Service:</dt><dd><p>/go_to_point_switch (server)</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.go_to_point_service.change_state">
+<span class="sig-prename descclassname"><span class="pre">scripts.go_to_point_service.</span></span><span class="sig-name descname"><span class="pre">change_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/go_to_point_service.html#change_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.go_to_point_service.change_state" title="Permalink to this definition"></a></dt>
+<dd><p>Args: int(state): the current state of the state machine</p>
+<p>This method will notify the change of state</p>
+<p>Return: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.go_to_point_service.clbk_odom">
+<span class="sig-prename descclassname"><span class="pre">scripts.go_to_point_service.</span></span><span class="sig-name descname"><span class="pre">clbk_odom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/go_to_point_service.html#clbk_odom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.go_to_point_service.clbk_odom" title="Permalink to this definition"></a></dt>
+<dd><p>Args: Odometry(msg): odometry message</p>
+<p>This method will fulfill the variables <em>position_</em>, <em>yaw_</em> with the received message informations</p>
+<p>Return: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.go_to_point_service.done">
+<span class="sig-prename descclassname"><span class="pre">scripts.go_to_point_service.</span></span><span class="sig-name descname"><span class="pre">done</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/go_to_point_service.html#done"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.go_to_point_service.done" title="Permalink to this definition"></a></dt>
+<dd><p>Args: None</p>
+<p>This method that will simply set the velocity to zero and publish it.</p>
+<p>Return: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.go_to_point_service.fix_yaw">
+<span class="sig-prename descclassname"><span class="pre">scripts.go_to_point_service.</span></span><span class="sig-name descname"><span class="pre">fix_yaw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">des_pos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/go_to_point_service.html#fix_yaw"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.go_to_point_service.fix_yaw" title="Permalink to this definition"></a></dt>
+<dd><p>Args: Point(des_pos): desired goal position</p>
+<p>This method will evaluate the heading error between the robot and the goal and if over a threshold will pulish a rotational speed to allign with it; otherwise it will change the current state of the node by the function <em>change_state</em> that will notify the changes.</p>
+<p>Return: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.go_to_point_service.go_straight_ahead">
+<span class="sig-prename descclassname"><span class="pre">scripts.go_to_point_service.</span></span><span class="sig-name descname"><span class="pre">go_straight_ahead</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">des_pos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/go_to_point_service.html#go_straight_ahead"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.go_to_point_service.go_straight_ahead" title="Permalink to this definition"></a></dt>
+<dd><p>Args: Point(des_pos): desired goal position</p>
+<p>This method will use a PID controller to move the robot in a straight line to the goal, passed as argument, then if this motion increase the misalignment of the robot over a threshold the state will be changed back to 0 to correct this fact; otherwise if the distance between the robot and the goal fall under a certain threshold the node will switch to the new state 2.</p>
+<p>Return: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.go_to_point_service.go_to_point_switch">
+<span class="sig-prename descclassname"><span class="pre">scripts.go_to_point_service.</span></span><span class="sig-name descname"><span class="pre">go_to_point_switch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/go_to_point_service.html#go_to_point_switch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.go_to_point_service.go_to_point_switch" title="Permalink to this definition"></a></dt>
+<dd><p>Args: SetBool(req): service request message</p>
+<p>This method will return the succes responce to the service client.</p>
+<p>Return: SetBoolResponse(res): service responce message</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.go_to_point_service.main">
+<span class="sig-prename descclassname"><span class="pre">scripts.go_to_point_service.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/go_to_point_service.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.go_to_point_service.main" title="Permalink to this definition"></a></dt>
+<dd><p>Args: None</p>
+<p>the node will, after initialization, create a publisher to the topic <em>/cmd_vel</em> of type Twist, it’s the topic used to communicate with the robot giving it the velocity, both linear and angular at each step; after that the node will subscribe to the topic <em>/odom</em> of type Odomentry, that will give a feedback to the algorithm giving the actual position and velocity of the robot;
+moreover the node will check the service <em>go_to_point</em> switch that will be used by the <em>bug_action_server</em> node to switch between the behavior of this node and the one of <em>wall_follower</em>.
+Thanks to the above mentioned subscription to the topic <em>/odom</em> all the times the robot receive a new message it will update its position and orientation by the callback <em>clbk_odom()</em>.
+finished this initial phase the node will check the actual goal position in the ros parameter server under the names <em>des_pos_x</em> and <em>des_pos_y</em>.</p>
+<p>Return: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.go_to_point_service.normalize_angle">
+<span class="sig-prename descclassname"><span class="pre">scripts.go_to_point_service.</span></span><span class="sig-name descname"><span class="pre">normalize_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/go_to_point_service.html#normalize_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.go_to_point_service.normalize_angle" title="Permalink to this definition"></a></dt>
+<dd><p>Args: float(angle): angle in radiants not normalized</p>
+<p>This method will normalize the angle argument obtaining an angle always between -pi and +pi°</p>
+<p>Return: float(angle): angle in radiants normalized</p>
+</dd></dl>
+
+</section>
+<section id="module-scripts.wall_follow_service">
+<span id="wall-follower-module"></span><h1>Wall follower Module:<a class="headerlink" href="#module-scripts.wall_follow_service" title="Permalink to this heading"></a></h1>
+<span class="target" id="module-wall_follower_service"></span><p>This node implement the behavior of, one an obstacle is encountered along the path, following the wall perimeter, maintaining the wall on the robot right side at a given distance.</p>
+<dl class="simple">
+<dt>Subscriber:</dt><dd><p>/scan</p>
+</dd>
+<dt>Publisher:</dt><dd><p>/cmd_vel</p>
+</dd>
+<dt>Service:</dt><dd><p>/wall_follower_switch (server)</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.wall_follow_service.change_state">
+<span class="sig-prename descclassname"><span class="pre">scripts.wall_follow_service.</span></span><span class="sig-name descname"><span class="pre">change_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/wall_follow_service.html#change_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.wall_follow_service.change_state" title="Permalink to this definition"></a></dt>
+<dd><p>Args: int(state): desired state of the state machine</p>
+<p>this method change the state of the robot between the <em>go_to_point</em> behavior and the <em>wall_follower</em> one based on the state set by the rest of the algorithm</p>
+<p>Return: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.wall_follow_service.clbk_laser">
+<span class="sig-prename descclassname"><span class="pre">scripts.wall_follow_service.</span></span><span class="sig-name descname"><span class="pre">clbk_laser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/wall_follow_service.html#clbk_laser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.wall_follow_service.clbk_laser" title="Permalink to this definition"></a></dt>
+<dd><p>Args: LaserScan(msg): Lidar data</p>
+<p>This method will check for the closer wall in the 5 circular sector in front of the robot and call the method ‘take_action()’</p>
+<p>Return: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.wall_follow_service.find_wall">
+<span class="sig-prename descclassname"><span class="pre">scripts.wall_follow_service.</span></span><span class="sig-name descname"><span class="pre">find_wall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/wall_follow_service.html#find_wall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.wall_follow_service.find_wall" title="Permalink to this definition"></a></dt>
+<dd><p>Args: None</p>
+<p>This method will set the message to publish on <em>/cmd_vel</em> to move the robot along a circular trajectory till it find a wall.</p>
+<p>Return: Twist(msg): desired linear and angular speed</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.wall_follow_service.follow_the_wall">
+<span class="sig-prename descclassname"><span class="pre">scripts.wall_follow_service.</span></span><span class="sig-name descname"><span class="pre">follow_the_wall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/wall_follow_service.html#follow_the_wall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.wall_follow_service.follow_the_wall" title="Permalink to this definition"></a></dt>
+<dd><p>Args: None</p>
+<p>This method will set the message to publish on <em>/cmd_vel</em> to move straight.</p>
+<p>Return: Twist(msg): desired linear and angular speed.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.wall_follow_service.main">
+<span class="sig-prename descclassname"><span class="pre">scripts.wall_follow_service.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/wall_follow_service.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.wall_follow_service.main" title="Permalink to this definition"></a></dt>
+<dd><p>Args: None</p>
+<p>This method after initialization will connect as a publisher to the topic <em>/cmd_vel</em>, to controll the robot motion, subscribe to the topic <em>/scan</em>, to get the information of the lidar and will connect to the service <em>wall_follower_switch</em> to activate or deactivate this node.</p>
+<p>Return: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.wall_follow_service.take_action">
+<span class="sig-prename descclassname"><span class="pre">scripts.wall_follow_service.</span></span><span class="sig-name descname"><span class="pre">take_action</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/wall_follow_service.html#take_action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.wall_follow_service.take_action" title="Permalink to this definition"></a></dt>
+<dd><p>Args: None</p>
+<p>This method based on the position of the closest wall will change the state of the node.if there is no wall closer then the threshold in front of the robot, or there is one but on the left or on both left and right the node will move in the state 0 that, with the next iteration of the main will call the method <em>find_wall()</em>,
+if instead there is a wall infront of the robot, or in front and on the right, or in front and on the left or all around the robot, the node will switch to the state 1, that at the next iteration will call the method <em>turn_left()</em>, if the robot has a wall on it’s right it will switch on the state 2 and on the next iteration will call the method <em>follow_the_wall()</em>.</p>
+<p>Return: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.wall_follow_service.turn_left">
+<span class="sig-prename descclassname"><span class="pre">scripts.wall_follow_service.</span></span><span class="sig-name descname"><span class="pre">turn_left</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/wall_follow_service.html#turn_left"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.wall_follow_service.turn_left" title="Permalink to this definition"></a></dt>
+<dd><p>Args: None</p>
+<p>This method will set the message to publish on <em>/cmd_vel</em> to turn the robot on the left.</p>
+<p>Return: Twist(msg): desired linear and angular speed</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.wall_follow_service.wall_follower_switch">
+<span class="sig-prename descclassname"><span class="pre">scripts.wall_follow_service.</span></span><span class="sig-name descname"><span class="pre">wall_follower_switch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/wall_follow_service.html#wall_follower_switch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.wall_follow_service.wall_follower_switch" title="Permalink to this definition"></a></dt>
+<dd><p>Args: SetBool(req): service request message</p>
+<p>This method will return the success responce to the service client.</p>
+<p>Return: SetBoolResponse(res): service responce message</p>
+</dd></dl>
+
+</section>
+<section id="module-scripts.bug_as">
+<span id="bug0-module"></span><h1>Bug0 Module:<a class="headerlink" href="#module-scripts.bug_as" title="Permalink to this heading"></a></h1>
+<span class="target" id="module-bug_as"></span><p>this node , based on a state machine architecture, together with the two node go_to_point and wall_follower will menage the implementation of the bug0 algorithm, indeed based on the lidar information will decide when to switch between the go_to_point behavior and the wall_follower one.</p>
+<dl class="simple">
+<dt>Parameter:</dt><dd><p>des_pos_x (output)
+des_pos_y (output)</p>
+</dd>
+<dt>Subscriber:</dt><dd><p>/scan
+/odom</p>
+</dd>
+<dt>Publisher:</dt><dd><p>/cmd_vel</p>
+</dd>
+<dt>Service:</dt><dd><p>/go_to_point_switch (client)
+/wall_follower_switch (client)</p>
+</dd>
+<dt>Action:</dt><dd><p>/reaching_goal (Server)</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.bug_as.change_state">
+<span class="sig-prename descclassname"><span class="pre">scripts.bug_as.</span></span><span class="sig-name descname"><span class="pre">change_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/bug_as.html#change_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.bug_as.change_state" title="Permalink to this definition"></a></dt>
+<dd><p>Args: int(state): desired state of the state machine</p>
+<p>this method change the state of the robot between the <em>go_to_point</em> behavior and the <em>wall_follower</em> one based on the state set by the rest of the algorithm</p>
+<p>Return: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.bug_as.clbk_laser">
+<span class="sig-prename descclassname"><span class="pre">scripts.bug_as.</span></span><span class="sig-name descname"><span class="pre">clbk_laser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/bug_as.html#clbk_laser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.bug_as.clbk_laser" title="Permalink to this definition"></a></dt>
+<dd><p>Args: LaserScan(msg): Lidar data</p>
+<p>This method checks which is the minimum distance between the robot and the environment objects in the five circular sectors in front of the robot and set that distance value under one name for each sector.</p>
+<p>Return: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.bug_as.clbk_odom">
+<span class="sig-prename descclassname"><span class="pre">scripts.bug_as.</span></span><span class="sig-name descname"><span class="pre">clbk_odom</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/bug_as.html#clbk_odom"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.bug_as.clbk_odom" title="Permalink to this definition"></a></dt>
+<dd><p>Args: Odometry(msg): position and orientation of the robot</p>
+<p>This method aquire the position information and put them in the variables <em>position</em>, <em>pose_</em> and <em>yaw_</em> in this way they are ready to use for the rest of the algorithm.</p>
+<p>Return: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.bug_as.done">
+<span class="sig-prename descclassname"><span class="pre">scripts.bug_as.</span></span><span class="sig-name descname"><span class="pre">done</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/bug_as.html#done"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.bug_as.done" title="Permalink to this definition"></a></dt>
+<dd><p>Args: None</p>
+<p>This method that will simply set the velocity to zero and publish it.</p>
+<p>Return: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.bug_as.main">
+<span class="sig-prename descclassname"><span class="pre">scripts.bug_as.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/bug_as.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.bug_as.main" title="Permalink to this definition"></a></dt>
+<dd><p>Args: None</p>
+<p>This method initially wait 2 second to allow the other nodes to start, then the node is initialized, the goal is initially set as the initial position, the node subscribe to the topic <em>/scan</em> for the scan data and the topic <em>/odom</em> to obtain the position informations of the robot.
+the node also create a publisher to the topic <em>/cmd_vel</em> to control the robot motion and connect to both the services <em>/go_to_point_switch</em> and <em>/wall_follower_switch</em> to activate them when needed.
+finally the node create an action server under the topic <em>/reaching_goal</em> to control the motion of the robot till the goal position.</p>
+<p>Return: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.bug_as.normalize_angle">
+<span class="sig-prename descclassname"><span class="pre">scripts.bug_as.</span></span><span class="sig-name descname"><span class="pre">normalize_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angle</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/bug_as.html#normalize_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.bug_as.normalize_angle" title="Permalink to this definition"></a></dt>
+<dd><p>Args: float(angle): angle in radiants not normalized</p>
+<p>This method will normalize the angle argument obtaining an angle always between -pi and +pi°</p>
+<p>Return: float(angle): angle in radiants normalized</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.bug_as.planning">
+<span class="sig-prename descclassname"><span class="pre">scripts.bug_as.</span></span><span class="sig-name descname"><span class="pre">planning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">goal</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/bug_as.html#planning"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.bug_as.planning" title="Permalink to this definition"></a></dt>
+<dd><p>Args: assignment_2_2022.msg.PlanningAction(goal): desired goal</p>
+<p>This method initially set the goal received from the action client in the ros parameter server, then getting inside the while loop it compute the distance respect the goal.
+after that initially the algorithm check if the action client required to delete the goal, and in this case the right feedback message is set and pusblished, the goal is preempted, the state is changed to 2 (the change state method will be analized right after), and the robot speed is set to zero.
+otherwise if the distance to the goal is less then 0.5 we assume it to be reached, the state is chaged to 2, as before the right feedback message is set and published and tho robot is blocked in its position.
+in case no wall is detected (so the array <em>regions_</em> is void) the algorithm just contineu.
+then if the state is set to 0, so the motion is controlled by the <em>go_to_point</em> behavior, the node send a feedback and if there is an obstacle nearer then 0.2 in front of the robot it changes teh state to 1.
+instead if the state in which we are is the 1, so the motion is controlled by the <em>wall_follower</em> behavior, the node send a feedback and controll the misalignment to the goal, if there is no obstacle in front of the robot closer then 1 and the misalignment is under the threshold 0.05 the state is changed back to 0.
+finally if the state is the 2 this method just break.
+if none of these case are fulfilled then the robot is in an unknown state, an error log message is displayed and the method wait.
+if in all of the cases the robot reach the goal, and so the variable success is set to true, the node display a log message and set the goal as succeeded.</p>
+<p>Return: None</p>
+</dd></dl>
+
+</section>
+<section id="module-scripts.node_a">
+<span id="node-a-module"></span><h1>Node A Module:<a class="headerlink" href="#module-scripts.node_a" title="Permalink to this heading"></a></h1>
+<span class="target" id="module-node_a"></span><p>This node works as an adapter converting the odometry information received in the custom message Conf.msg type.</p>
+<dl class="simple">
+<dt>Subscriber:</dt><dd><p>/odom</p>
+</dd>
+<dt>Publisher:</dt><dd><p>/configuration</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.node_a.main">
+<span class="sig-prename descclassname"><span class="pre">scripts.node_a.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/node_a.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.node_a.main" title="Permalink to this definition"></a></dt>
+<dd><p>Args: None</p>
+<p>This method initialize the node, create a publisher to the topic <em>/configuration</em> (outside of the main in such a way it can be used by the callback), subscribe to the topic <em>/odom</em> and wait for the master to be launched.</p>
+<p>Return: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.node_a.odom_cb">
+<span class="sig-prename descclassname"><span class="pre">scripts.node_a.</span></span><span class="sig-name descname"><span class="pre">odom_cb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/node_a.html#odom_cb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.node_a.odom_cb" title="Permalink to this definition"></a></dt>
+<dd><p>Args: Odometry(msg): position and orientation of the robot</p>
+<p>This method aquire the odometry message and fulfill the custom message confy and pusblish it under the topic <em>/configuration</em>.</p>
+<p>Return: None</p>
+</dd></dl>
+
+</section>
+<section id="module-scripts.node_c">
+<span id="node-c-module"></span><h1>Node C Module:<a class="headerlink" href="#module-scripts.node_c" title="Permalink to this heading"></a></h1>
+<span class="target" id="module-node_c"></span><p>This node will use the information received to print on the terminal the actual distance to the goal and the average speed of tyhe robot.</p>
+<dl class="simple">
+<dt>Parameter:</dt><dd><p>des_pos_x (input)
+des_pos_y (input)</p>
+</dd>
+<dt>Subscriber:</dt><dd><p>/configuration</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.node_c.confy_cb">
+<span class="sig-prename descclassname"><span class="pre">scripts.node_c.</span></span><span class="sig-name descname"><span class="pre">confy_cb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/node_c.html#confy_cb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.node_c.confy_cb" title="Permalink to this definition"></a></dt>
+<dd><p>Args: assignment_2_2022.msg.Conf(msg): actual position and velocity of the robot</p>
+<p>In this method first the goal is retrieved form the ros parameter server, the distance between the robot position and the goal is evaluated together with the average speed, all controlled by the counter ‘n’ used for the average operation, if it’s a multiple of 40 then the two information are displaied.</p>
+<p>Return: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.node_c.main">
+<span class="sig-prename descclassname"><span class="pre">scripts.node_c.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/node_c.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.node_c.main" title="Permalink to this definition"></a></dt>
+<dd><p>Args: None</p>
+<p>This method initialize the node, subscribe to the topic <em>/configuration</em> to aquire the information about the robot position and velocity and wait for the master to be launched, after that the node will spin.</p>
+<p>Return: None</p>
+</dd></dl>
+
+</section>
+<section id="module-scripts.info_server">
+<span id="info-server-module"></span><h1>Info server Module:<a class="headerlink" href="#module-scripts.info_server" title="Permalink to this heading"></a></h1>
+<span class="target" id="module-info_server"></span><p>This node will provide the system with a service, used by the user_interface for counting the number of goal reached and the number of goal deleted upon request.</p>
+<dl class="simple">
+<dt>Parameter:</dt><dd><p>n_goal (input)
+n_deleted (input)</p>
+</dd>
+<dt>Service:</dt><dd><p>/info (server)</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.info_server.info_server">
+<span class="sig-prename descclassname"><span class="pre">scripts.info_server.</span></span><span class="sig-name descname"><span class="pre">info_server</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/info_server.html#info_server"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.info_server.info_server" title="Permalink to this definition"></a></dt>
+<dd><p>Args: None</p>
+<p>This method inialize the node, create the srvice <em>/info</em> and then spin.</p>
+<p>Return: None</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.info_server.ret_info">
+<span class="sig-prename descclassname"><span class="pre">scripts.info_server.</span></span><span class="sig-name descname"><span class="pre">ret_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/info_server.html#ret_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.info_server.ret_info" title="Permalink to this definition"></a></dt>
+<dd><p>Args: Ngoal(req): None</p>
+<p>In this method the message is fulfilled with the number of goal achived and deleted, obtained from the ros parameter server, and sent back to the client.</p>
+<p>Return: [int(n_goal), int(n_deleted)]: number of goal achived and number of goal deleted</p>
+</dd></dl>
+
+</section>
+<section id="module-scripts.user_interface">
+<span id="user-interface-module"></span><h1>User interface Module:<a class="headerlink" href="#module-scripts.user_interface" title="Permalink to this heading"></a></h1>
+<span class="target" id="module-user_interface"></span><p>this node menage the interaction with the simulation, through it it’s possible to set a new goal, delete the current one, call the service provided by info_server to see how many goal have been reached and how many have been deleted</p>
+<dl class="simple">
+<dt>Parameter:</dt><dd><p>n_goal (input/output)
+n_deleted (input/output)</p>
+</dd>
+<dt>Service:</dt><dd><p>/info (client)</p>
+</dd>
+<dt>Action:</dt><dd><p>/reaching_goal (client)</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.user_interface.main">
+<span class="sig-prename descclassname"><span class="pre">scripts.user_interface.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/user_interface.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.user_interface.main" title="Permalink to this definition"></a></dt>
+<dd><p>Args: None</p>
+<p>This method first initialize the node, then create the action client for teh action <em>/reaching_goal</em>, needed to set a new goal or delete it, and wait for the action server launch;
+after that it connect as a client to the service <em>/info</em> provided by the <em>info_server</em> node to aquire the number of goal reached and deleted upon request, and wait for its launch.
+then some variable are initialized and the number of goal reached and deleted is initialized in the ros parameters server.
+getting inside the while loop the node check if the goal has been reached, by checking the state of the action server and that it’s the first time it has been checked since the goal was achived, if this is the case the number of goal is retrieved from the ros parameters server, increased and set back in the ros parameters server.
+otherwise the goal flag <em>gf</em> is set to 0 again, to avoid to increase the number of goal in the time periods in which the goal has been reached and we’re waiting for a new one.
+after that the counter <em>count</em> is decreased, if it’s bigger then 0, this counter will be used to clear the terminal only when needed.
+done that if the counter reach zero the terminal is cleared, the menu message is displayed and the node wait for a user input in non blocking mode, based on it:
+- if the user type <em>n</em> the node ask to set the new goal position in it’s x and y coordinates, the new goal is sended to the action server and the counter is set to zero.
+- if the user type <em>d</em> and the robot is actually tring to reach a goal, checked by the action server state, the node will delete the goal and increase the number of goal deleted in te ros parameters server.
+- if the user type <em>i</em> the node will use the <em>/info</em> service to aquire the number of goal achieved and deleted and will display it on the terminal, the counter will be then set to 10 to maintain the message on the terminal for almost 5 seconds.</p>
+<p>Return: None</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Lugano Giacomo.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
