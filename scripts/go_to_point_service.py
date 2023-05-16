@@ -65,11 +65,11 @@ pub = None
 
 def go_to_point_switch(req):
     """
-    Args: SetBool req: service request message 
+    Args: SetBool(req): service request message 
 
     This method will return the succes responce to the service client.
 
-    Return: SetBoolResponse res: service responce message
+    Return: SetBoolResponse(res): service responce message
     """
     global active_
     active_ = req.data
@@ -83,9 +83,11 @@ def go_to_point_switch(req):
 
 def clbk_odom(msg):
     """
-    Args: Odometry msg: odometry message
+    Args: Odometry(msg): odometry message
 
-    This method will fulfill the variables 'position_', 'yaw_' with the received message informations
+    This method will fulfill the variables *position_*, *yaw_* with the received message informations
+
+    Return: None
     """
     global position_
     global yaw_
@@ -105,7 +107,11 @@ def clbk_odom(msg):
 
 def change_state(state):
     """
+    Args: int(state): the current state of the state machine
+
     This method will notify the change of state
+
+    Return: None
     """
     global state_
     state_ = state
@@ -114,7 +120,11 @@ def change_state(state):
 
 def normalize_angle(angle):
     """
-    This method will normalize the angle argument obtaining an angle always between -180° and +180°
+    Args: float(angle): angle in radiants not normalized
+
+    This method will normalize the angle argument obtaining an angle always between -pi and +pi°
+
+    Return: float(angle): angle in radiants normalized
     """
     if(math.fabs(angle) > math.pi):
         angle = angle - (2 * math.pi * angle) / (math.fabs(angle))
@@ -123,7 +133,11 @@ def normalize_angle(angle):
 
 def fix_yaw(des_pos):
     """ 
-    This method will evaluate the heading error between the robot and the goal and if over a threshold will pulish a rotational speed to allign with it; otherwise it will change the current state of the node by the function 'change_state' that will notify the changes.
+    Args: Point(des_pos): desired goal position
+
+    This method will evaluate the heading error between the robot and the goal and if over a threshold will pulish a rotational speed to allign with it; otherwise it will change the current state of the node by the function *change_state* that will notify the changes.
+    
+    Return: None
     """
     global yaw_, pub, yaw_precision_2_, state_
     desired_yaw = math.atan2(des_pos.y - position_.y, des_pos.x - position_.x)
@@ -149,7 +163,11 @@ def fix_yaw(des_pos):
 
 def go_straight_ahead(des_pos):
     """
+    Args: Point(des_pos): desired goal position
+
     This method will use a PID controller to move the robot in a straight line to the goal, passed as argument, then if this motion increase the misalignment of the robot over a threshold the state will be changed back to 0 to correct this fact; otherwise if the distance between the robot and the goal fall under a certain threshold the node will switch to the new state 2.
+    
+    Return: None
     """
     global yaw_, pub, yaw_precision_, state_
     desired_yaw = math.atan2(des_pos.y - position_.y, des_pos.x - position_.x)
@@ -177,7 +195,11 @@ def go_straight_ahead(des_pos):
 
 def done():
     """
+    Args: None
+
     This method that will simply set the velocity to zero and publish it.
+    
+    Return: None
     """
     twist_msg = Twist()
     twist_msg.linear.x = 0
@@ -187,10 +209,14 @@ def done():
 
 def main():
     """
-    the node will, after initialization, create a publisher to the topic '/cmd_vel' of type Twist, it's the topic used to communicate with the robot giving it the velocity, both linear and angular at each step; after that the node will subscribe to the topic '/odom' of type Odomentry, that will give a feedback to the algorithm giving the actual position and velocity of the robot;
-    moreover the node will check the service *go_to_point* switch that will be used by the 'bug_action_server' node to switch between the behavior of this node and the one of 'wall_follower'.
-    Thanks to the above mentioned subscription to the topic '/odom' all the times the robot receive a new message it will update its position and orientation by the callback 'clbk_odom()'.
-    finished this initial phase the node will check the actual goal position in the ros parameter server under the names 'des_pos_x' and 'des_pos_y'.
+    Args: None
+
+    the node will, after initialization, create a publisher to the topic */cmd_vel* of type Twist, it's the topic used to communicate with the robot giving it the velocity, both linear and angular at each step; after that the node will subscribe to the topic */odom* of type Odomentry, that will give a feedback to the algorithm giving the actual position and velocity of the robot;
+    moreover the node will check the service *go_to_point* switch that will be used by the *bug_action_server* node to switch between the behavior of this node and the one of *wall_follower*.
+    Thanks to the above mentioned subscription to the topic */odom* all the times the robot receive a new message it will update its position and orientation by the callback *clbk_odom()*.
+    finished this initial phase the node will check the actual goal position in the ros parameter server under the names *des_pos_x* and *des_pos_y*.
+    
+    Return: None
     """
     global pub, active_
 

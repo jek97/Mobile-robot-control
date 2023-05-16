@@ -24,10 +24,24 @@ Service:
 
 info = Ngoal()
 
-def ret_info(req):
+def ret_info():
+    """
+    Args: None
+
+    In this method the message is fulfilled with the number of goal achived and deleted, obtained from the ros parameter server, and sent back to the client.
+
+    Return: [int(n_goal), int(n_deleted)]: number of goal achived and number of goal deleted
+    """
     return [rospy.get_param('n_goal'), rospy.get_param('n_deleted')]
     
 def info_server():
+    """
+    Args: None
+
+    This method inialize the node, create the srvice */info* and then spin.
+    
+    Return: None
+    """
     rospy.init_node('info_server')
     rospy.Service('/info', Ngoal, ret_info)
     rospy.spin()

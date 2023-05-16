@@ -46,6 +46,13 @@ state_dict_ = {
 
 
 def wall_follower_switch(req):
+    """
+    Args: SetBool(req): service request message 
+
+    This method will return the success responce to the service client.
+
+    Return: SetBoolResponse(res): service responce message
+    """
     global active_
     active_ = req.data
     res = SetBoolResponse()
@@ -55,6 +62,13 @@ def wall_follower_switch(req):
 
 
 def clbk_laser(msg):
+    """
+    Args: LaserScan(msg): Lidar data
+
+    This method will check for the closer wall in the 5 circular sector in front of the robot and call the method 'take_action()'
+    
+    Return: None
+    """
     global regions_
     regions_ = {
         'right':  min(min(msg.ranges[0:143]), 10),
@@ -68,6 +82,13 @@ def clbk_laser(msg):
 
 
 def change_state(state):
+    """
+    Args: int(state): desired state of the state machine
+    
+    this method change the state of the robot between the *go_to_point* behavior and the *wall_follower* one based on the state set by the rest of the algorithm
+    
+    Return: None
+    """
     global state_, state_dict_
     if state is not state_:
         print ('Wall follower - [%s] - %s' % (state, state_dict_[state]))
@@ -75,6 +96,14 @@ def change_state(state):
 
 
 def take_action():
+    """
+    Args: None
+
+    This method based on the position of the closest wall will change the state of the node.if there is no wall closer then the threshold in front of the robot, or there is one but on the left or on both left and right the node will move in the state 0 that, with the next iteration of the main will call the method *find_wall()*,
+    if instead there is a wall infront of the robot, or in front and on the right, or in front and on the left or all around the robot, the node will switch to the state 1, that at the next iteration will call the method *turn_left()*, if the robot has a wall on it's right it will switch on the state 2 and on the next iteration will call the method *follow_the_wall()*. 
+    
+    Return: None
+    """
     global regions_
     regions = regions_
     msg = Twist()
@@ -115,6 +144,13 @@ def take_action():
 
 
 def find_wall():
+    """
+    Args: None
+
+    This method will set the message to publish on */cmd_vel* to move the robot along a circular trajectory till it find a wall.
+
+    Return: Twist(msg): desired linear and angular speed
+    """
     msg = Twist()
     msg.linear.x = 0.2
     msg.angular.z = -0.3
@@ -122,12 +158,26 @@ def find_wall():
 
 
 def turn_left():
+    """
+    Args: None
+
+    This method will set the message to publish on */cmd_vel* to turn the robot on the left.
+    
+    Return: Twist(msg): desired linear and angular speed
+    """
     msg = Twist()
     msg.angular.z = 0.3
     return msg
 
 
 def follow_the_wall():
+    """
+    Args: None
+
+    This method will set the message to publish on */cmd_vel* to move straight.
+
+    Return: Twist(msg): desired linear and angular speed.
+    """
     global regions_
 
     msg = Twist()
@@ -136,6 +186,13 @@ def follow_the_wall():
 
 
 def main():
+    """
+    Args: None
+
+    This method after initialization will connect as a publisher to the topic */cmd_vel*, to controll the robot motion, subscribe to the topic */scan*, to get the information of the lidar and will connect to the service *wall_follower_switch* to activate or deactivate this node.
+    
+    Return: None
+    """
     global pub_, active_
 
     rospy.init_node('reading_laser')

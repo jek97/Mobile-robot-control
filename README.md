@@ -175,7 +175,7 @@ def clbk_laser(msg):
 
     take_action()
 ```
-that will check for the closer wall in the 5 circular sector in front of the robot ad cal the method *'take_action()'*:
+that will check for the closer wall in the 5 circular sector in front of the robot and call the method *'take_action()'*:
 ```
 def take_action():
     global regions_
@@ -217,7 +217,7 @@ def take_action():
         rospy.loginfo(regions)
 ```
 that based on the position of the closest wall will change the state of the node.
-if there is no wall closer then the threshold in front of the robot, or there is one but on the left or on both left and right the node will move in teh state 0 that, with the next iteration of the main will call the method *'find_wall()'*:
+if there is no wall closer then the threshold in front of the robot, or there is one but on the left or on both left and right the node will move in the state 0 that, with the next iteration of the main will call the method *'find_wall()'*:
 ```
 def find_wall():
     msg = Twist()
@@ -276,7 +276,7 @@ def main():
     while not rospy.is_shutdown():
         rate.sleep()
 ```
-initially 2 second are waite dto allow the other nodes to start, then the node is initialized, the goal is initially set as the initial position, the node subscribe to the topic *'/scan'* for the scan data and the topic *'/odom'* to obtain the position informations of the robot.
+initially 2 second are waited to allow the other nodes to start, then the node is initialized, the goal is initially set as the initial position, the node subscribe to the topic *'/scan'* for the scan data and the topic *'/odom'* to obtain the position informations of the robot.
 the node also create a publisher to the topic *'/cmd_vel'* to control the robot motion and connect to both the services *'/go_to_point_switch'* and *'/wall_follower_switch'* to activate them when needed.
 finally the node create an action server under the topic *'/reaching_goal'* to control the motion of the robot till the goal position.
 all the times the node receives some information form the topic *'/scan'*: 
@@ -291,7 +291,7 @@ def clbk_laser(msg):
         'left':   min(min(msg.ranges[576:719]), 10),
     }
 ```
-it checks which is the minimum distance between the robot and the environment objects in the five circular sectors in front of the robot and set that distance value under one name for sector.
+it checks which is the minimum distance between the robot and the environment objects in the five circular sectors in front of the robot and set that distance value under one name for each sector.
 instead when it receive information from the topi *'/odom'*:
 ```
 def clbk_odom(msg):
@@ -433,8 +433,8 @@ def odom_cb(msg):
     # publish the message on the given topic
     pub_conf.publish(confy) 
 ```
-which simpluy aquire the message fulfill the custom message confy and pusblish it under the topic *'/configuration'*.
-* node_c: it will use the information received to print on the terminal the actual distance to the goal and the average speed of tyhe robot:
+which simply aquire the odometry message fulfill the custom message confy and pusblish it under the topic *'/configuration'*.
+* node_c: it will use the information received to print on the terminal the actual distance to the goal and the average speed of the robot:
 ```
 def main():
     rospy.init_node('node_c', anonymous=True) # init the node
@@ -446,7 +446,7 @@ def main():
 
     rospy.spin()
 ```
-the node initialize itself, subscribe to the topic *'/configuration'* to aquire the information abou the robot position and velocity and wait for the master to be launched, after that the node will spin.
+the node initialize itself, subscribe to the topic *'/configuration'* to aquire the information about the robot position and velocity and wait for the master to be launched, after that the node will spin.
 anytime the node receive a message it will call the associated callback *'confy_cb()'*:
 ```
 def confy_cb(msg):

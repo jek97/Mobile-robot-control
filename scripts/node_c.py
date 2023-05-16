@@ -31,6 +31,13 @@ av = 0 # init the average velocity
 n = 0 # init the counter
 
 def confy_cb(msg):
+    """
+    Args: assignment_2_2022.msg.Conf(msg): actual position and velocity of the robot
+
+    In this method first the goal is retrieved form the ros parameter server, the distance between the robot position and the goal is evaluated together with the average speed, all controlled by the counter 'n' used for the average operation, if it's a multiple of 40 then the two information are displaied.
+    
+    Return: None
+    """
     global n, d, v, av
     # increase the counter:
     n += 1
@@ -48,6 +55,13 @@ def confy_cb(msg):
         rospy.loginfo(log)
 
 def main():
+    """
+    Args: None
+
+    This method initialize the node, subscribe to the topic */configuration* to aquire the information about the robot position and velocity and wait for the master to be launched, after that the node will spin.
+    
+    Return: None
+    """
     rospy.init_node('node_c', anonymous=True) # init the node
     sub_confy = rospy.Subscriber('/configuration', assignment_2_2022.msg.Conf, confy_cb) # sub to odom to obtain position and velocity
 

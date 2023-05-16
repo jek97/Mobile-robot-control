@@ -33,6 +33,22 @@ Action:
 """
 
 def main():
+    """
+    Args: None
+
+    This method first initialize the node, then create the action client for teh action */reaching_goal*, needed to set a new goal or delete it, and wait for the action server launch;
+    after that it connect as a client to the service */info* provided by the *info_server* node to aquire the number of goal reached and deleted upon request, and wait for its launch.
+    then some variable are initialized and the number of goal reached and deleted is initialized in the ros parameters server.
+    getting inside the while loop the node check if the goal has been reached, by checking the state of the action server and that it's the first time it has been checked since the goal was achived, if this is the case the number of goal is retrieved from the ros parameters server, increased and set back in the ros parameters server.
+    otherwise the goal flag *gf* is set to 0 again, to avoid to increase the number of goal in the time periods in which the goal has been reached and we're waiting for a new one.
+    after that the counter *count* is decreased, if it's bigger then 0, this counter will be used to clear the terminal only when needed.
+    done that if the counter reach zero the terminal is cleared, the menu message is displayed and the node wait for a user input in non blocking mode, based on it:
+    - if the user type *n* the node ask to set the new goal position in it's x and y coordinates, the new goal is sended to the action server and the counter is set to zero.
+    - if the user type *d* and the robot is actually tring to reach a goal, checked by the action server state, the node will delete the goal and increase the number of goal deleted in te ros parameters server.
+    - if the user type *i* the node will use the */info* service to aquire the number of goal achieved and deleted and will display it on the terminal, the counter will be then set to 10 to maintain the message on the terminal for almost 5 seconds.
+    
+    Return: None
+    """
     gf = 0 # goal flag to increase the number of goal only the first time the state pass to succeeded
     rospy.init_node('user_interface', anonymous=True) # init the node
     act_clnt = actionlib.SimpleActionClient('/reaching_goal', assignment_2_2022.msg.PlanningAction)
