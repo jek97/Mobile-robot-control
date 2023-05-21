@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <launch>
     <include file="$(find assignment_2_2022)/launch/sim_w1.launch" />
+    <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" />
     <param name="des_pos_x" value= "0.0" />
     <param name="des_pos_y" value= "1.0" />
     <node pkg="assignment_2_2022" type="wall_follow_service.py" name="wall_follower" />
@@ -9,5 +10,7 @@
     <node pkg="assignment_2_2022" type="info_server.py" name="info_server" />
     <node pkg="assignment_2_2022" type="node_a.py" name="node_a" />
     <node pkg="assignment_2_2022" type="node_c.py" name="node_c" output="screen" launch-prefix="xterm -e" />
+    <node pkg="tf2_web_republisher" type="tf2_web_republisher" name="tf2_web_republisher" />
+    
 </launch>
 
